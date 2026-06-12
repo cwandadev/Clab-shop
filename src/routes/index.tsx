@@ -1,29 +1,160 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useSuspenseQuery, queryOptions } from "@tanstack/react-query";
+import { useState } from "react";
+import { Header } from "@/components/Header";
+import { ProductCard } from "@/components/ProductCard";
+import { listProducts } from "@/lib/products.functions";
+
+const productsQO = queryOptions({
+  queryKey: ["products"],
+  queryFn: () => listProducts(),
+});
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Your App" },
-      { name: "description", content: "Replace this with a one-sentence description of your app." },
-      { property: "og:title", content: "Your App" },
-      { property: "og:description", content: "Replace this with a one-sentence description of your app." },
+      { title: "Circuit Archive — DIY Electronics Components & Tools" },
+      {
+        name: "description",
+        content:
+          "Buy Arduino, Raspberry Pi, LEDs, resistors, soldering tools and more. Free Kigali shipping over $10.",
+      },
     ],
   }),
+  loader: ({ context }) => context.queryClient.ensureQueryData(productsQO),
   component: Index,
+  errorComponent: ({ error }) => (
+    <div className="p-8 text-center text-sm text-muted-foreground">
+      Could not load products: {error.message}
+    </div>
+  ),
 });
 
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
 function Index() {
+  const { data: products } = useSuspenseQuery(productsQO);
+  const [category, setCategory] = useState<string | null>(null);
+  const [voltage, setVoltage] = useState<Set<string>>(new Set());
+
+  const categories = Array.from(new Set(products.map((p) => p.category)));
+  const counts = categories.reduce<Record<string, number>>((acc, c) => {
+    acc[c] = products.filter((p) => p.category === c).length;
+    return acc;
+  }, {});
+
+  let filtered = category ? products.filter((p) => p.category === category) : products;
+  if (voltage.size > 0) {
+    filtered = filtered.filter((p) =>
+      Array.from(voltage).some((v) => (p.spec_1 || "").includes(v) || (p.spec_2 || "").includes(v)),
+    );
+  }
+
   return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
+    <div className="min-h-screen bg-background">
+      <Header />
+
+      <main className="mx-auto max-w-7xl px-4 py-8 sm:px-6">
+        <div className="flex flex-col lg:flex-row gap-8">
+          <aside className="w-full lg:w-56 shrink-0 space-y-8">
+            <section>
+              <h3 className="mb-4 font-mono text-xs font-medium uppercase tracking-widest text-muted-foreground">
+                Category_Idx
+              </h3>
+              <ul className="space-y-2">
+                <li>
+                  <button
+                    onClick={() => setCategory(null)}
+                    className={
+                      "group flex w-full justify-between text-sm " +
+                      (category === null ? "text-accent font-medium" : "")
+                    }
+                  >
+                    <span>All</span>
+                    <span className="font-mono text-muted-foreground">{products.length}</span>
+                  </button>
+                </li>
+                {categories.map((c) => (
+                  <li key={c}>
+                    <button
+                      onClick={() => setCategory(c)}
+                      className={
+                        "group flex w-full justify-between text-sm " +
+                        (category === c ? "text-accent font-medium" : "")
+                      }
+                    >
+                      <span>{c}</span>
+                      <span className="font-mono text-muted-foreground group-hover:text-foreground">
+                        {counts[c]}
+                      </span>
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            </section>
+
+            <section>
+              <h3 className="mb-4 font-mono text-xs font-medium uppercase tracking-widest text-muted-foreground">
+                Voltage_Range
+              </h3>
+              <div className="space-y-2">
+                {["3.3V", "5.0V", "12.0V"].map((v) => (
+                  <label key={v} className="flex items-center gap-2 text-sm cursor-pointer">
+                    <input
+                      type="checkbox"
+                      checked={voltage.has(v)}
+                      onChange={(e) => {
+                        const next = new Set(voltage);
+                        if (e.target.checked) next.add(v);
+                        else next.delete(v);
+                        setVoltage(next);
+                      }}
+                      className="size-4 rounded border-border"
+                    />
+                    {v}
+                  </label>
+                ))}
+              </div>
+            </section>
+          </aside>
+
+          <div className="flex-1">
+            <header className="mb-8">
+              <h1 className="text-2xl font-medium tracking-tight text-balance leading-none">
+                Electronic Components & Precision Tools
+              </h1>
+              <p className="mt-2 max-w-[56ch] text-sm text-muted-foreground text-pretty">
+                Source high-tolerance microelectronics, development boards, and specialized lab
+                equipment for modern hardware engineering.
+              </p>
+            </header>
+
+            {filtered.length === 0 ? (
+              <p className="rounded-lg border border-border p-12 text-center text-sm text-muted-foreground">
+                No products match these filters.
+              </p>
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-px bg-border ring-1 ring-border rounded-lg overflow-hidden">
+                {filtered.map((p) => (
+                  <ProductCard key={p.id} product={p} />
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
+      </main>
+
+      <footer className="mx-auto mt-24 max-w-7xl border-t border-border px-4 py-12 sm:px-6">
+        <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+          <div className="flex items-center gap-2">
+            <div className="size-5 rounded-sm border-2 border-foreground" />
+            <span className="font-mono text-sm font-semibold tracking-tighter">
+              CIRCUIT_ARCHIVE v1.0
+            </span>
+          </div>
+          <p className="font-mono text-[10px] uppercase tracking-widest text-muted-foreground">
+            System Status: Operational // Warehouse Node: Kigali
+          </p>
+        </div>
+      </footer>
     </div>
   );
 }
