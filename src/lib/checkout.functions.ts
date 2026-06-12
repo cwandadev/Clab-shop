@@ -81,9 +81,9 @@ export const createCheckoutSession = createServerFn({ method: "POST" })
         customer_phone: data.customer_phone || null,
         city: data.city,
         address: data.address,
-        subtotal_usd: subtotalUsd.toFixed(2),
-        shipping_usd: shippingUsd.toFixed(2),
-        total_usd: totalUsd.toFixed(2),
+        subtotal_usd: Number(subtotalUsd.toFixed(2)),
+        shipping_usd: Number(shippingUsd.toFixed(2)),
+        total_usd: Number(totalUsd.toFixed(2)),
         display_currency: data.display_currency,
         status: "pending",
       })
@@ -96,7 +96,7 @@ export const createCheckoutSession = createServerFn({ method: "POST" })
         order_id: order.id,
         product_id: l.product_id,
         product_name: l.product_name,
-        unit_price_usd: l.unit_price_usd.toFixed(2),
+        unit_price_usd: Number(l.unit_price_usd.toFixed(2)),
         quantity: l.quantity,
       })),
     );
