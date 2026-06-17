@@ -14,6 +14,33 @@ export type Database = {
   }
   public: {
     Tables: {
+      categories: {
+        Row: {
+          created_at: string
+          description: string | null
+          id: string
+          name: string
+          slug: string
+          sort_order: number
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          name: string
+          slug: string
+          sort_order?: number
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          name?: string
+          slug?: string
+          sort_order?: number
+        }
+        Relationships: []
+      }
       order_items: {
         Row: {
           id: string
@@ -67,6 +94,7 @@ export type Database = {
           display_currency: string
           id: string
           payment_intent_id: string | null
+          payment_method: string
           shipping_usd: number
           status: string
           subtotal_usd: number
@@ -83,6 +111,7 @@ export type Database = {
           display_currency?: string
           id?: string
           payment_intent_id?: string | null
+          payment_method?: string
           shipping_usd?: number
           status?: string
           subtotal_usd: number
@@ -99,6 +128,7 @@ export type Database = {
           display_currency?: string
           id?: string
           payment_intent_id?: string | null
+          payment_method?: string
           shipping_usd?: number
           status?: string
           subtotal_usd?: number
@@ -107,48 +137,161 @@ export type Database = {
         }
         Relationships: []
       }
+      product_categories: {
+        Row: {
+          category_id: string
+          product_id: string
+        }
+        Insert: {
+          category_id: string
+          product_id: string
+        }
+        Update: {
+          category_id?: string
+          product_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "product_categories_category_id_fkey"
+            columns: ["category_id"]
+            isOneToOne: false
+            referencedRelation: "categories"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "product_categories_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "products"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      product_images: {
+        Row: {
+          alt_text: string | null
+          created_at: string
+          id: string
+          is_primary: boolean
+          product_id: string
+          sort_order: number
+          url: string
+        }
+        Insert: {
+          alt_text?: string | null
+          created_at?: string
+          id?: string
+          is_primary?: boolean
+          product_id: string
+          sort_order?: number
+          url: string
+        }
+        Update: {
+          alt_text?: string | null
+          created_at?: string
+          id?: string
+          is_primary?: boolean
+          product_id?: string
+          sort_order?: number
+          url?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "product_images_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "products"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      product_voltages: {
+        Row: {
+          product_id: string
+          voltage_id: string
+        }
+        Insert: {
+          product_id: string
+          voltage_id: string
+        }
+        Update: {
+          product_id?: string
+          voltage_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "product_voltages_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "products"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "product_voltages_voltage_id_fkey"
+            columns: ["voltage_id"]
+            isOneToOne: false
+            referencedRelation: "voltage_ranges"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       products: {
         Row: {
           active: boolean
           category: string
+          compare_at_price_usd: number | null
           created_at: string
           description: string | null
+          digital_file_url: string | null
           id: string
           image_url: string | null
+          low_stock_threshold: number
           name: string
           price_usd: number
+          product_type: string
           slug: string
           spec_1: string | null
           spec_2: string | null
           stock: number
+          weight_grams: number | null
         }
         Insert: {
           active?: boolean
           category: string
+          compare_at_price_usd?: number | null
           created_at?: string
           description?: string | null
+          digital_file_url?: string | null
           id?: string
           image_url?: string | null
+          low_stock_threshold?: number
           name: string
           price_usd: number
+          product_type?: string
           slug: string
           spec_1?: string | null
           spec_2?: string | null
           stock?: number
+          weight_grams?: number | null
         }
         Update: {
           active?: boolean
           category?: string
+          compare_at_price_usd?: number | null
           created_at?: string
           description?: string | null
+          digital_file_url?: string | null
           id?: string
           image_url?: string | null
+          low_stock_threshold?: number
           name?: string
           price_usd?: number
+          product_type?: string
           slug?: string
           spec_1?: string | null
           spec_2?: string | null
           stock?: number
+          weight_grams?: number | null
         }
         Relationships: []
       }
@@ -191,6 +334,33 @@ export type Database = {
           id?: string
           role?: Database["public"]["Enums"]["app_role"]
           user_id?: string
+        }
+        Relationships: []
+      }
+      voltage_ranges: {
+        Row: {
+          created_at: string
+          id: string
+          label: string
+          max_volts: number | null
+          min_volts: number | null
+          sort_order: number
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          label: string
+          max_volts?: number | null
+          min_volts?: number | null
+          sort_order?: number
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          label?: string
+          max_volts?: number | null
+          min_volts?: number | null
+          sort_order?: number
         }
         Relationships: []
       }
