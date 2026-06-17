@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
-import type { Currency } from "./currency";
+import { detectCurrency, type Currency } from "./currency";
 
 export type CartItem = {
   id: string;
@@ -26,23 +26,24 @@ const StoreContext = createContext<StoreState | null>(null);
 
 export function StoreProvider({ children }: { children: ReactNode }) {
   const [cart, setCart] = useState<CartItem[]>([]);
-  const [currency, setCurrency] = useState<Currency>("USD");
+  const [currency, setCurrency] = useState<Currency>("RWF");
 
   useEffect(() => {
     try {
-      const c = localStorage.getItem("ca_cart");
-      const cur = localStorage.getItem("ca_currency");
+      const c = localStorage.getItem("tl_cart");
+      const cur = localStorage.getItem("tl_currency");
       if (c) setCart(JSON.parse(c));
       if (cur) setCurrency(cur as Currency);
+      else setCurrency(detectCurrency());
     } catch {}
   }, []);
 
   useEffect(() => {
-    localStorage.setItem("ca_cart", JSON.stringify(cart));
+    localStorage.setItem("tl_cart", JSON.stringify(cart));
   }, [cart]);
 
   useEffect(() => {
-    localStorage.setItem("ca_currency", currency);
+    localStorage.setItem("tl_currency", currency);
   }, [currency]);
 
   const addToCart: StoreState["addToCart"] = (item, qty = 1) => {
