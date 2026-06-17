@@ -78,16 +78,16 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Circuit Archive — DIY Electronics Components & Tools" },
+      { title: "tieflab — DIY Electronics, Components & Creative Hardware" },
       {
         name: "description",
         content:
-          "Source LEDs, resistors, Arduino, Raspberry Pi, soldering tools and more. Free shipping in Kigali on orders over $10.",
+          "tieflab from Clab: LEDs, Arduino, Raspberry Pi, soldering tools, futuristic bulbs and creative DIY electronics. Free Kigali shipping over $10.",
       },
-      { property: "og:title", content: "Circuit Archive — DIY Electronics" },
+      { property: "og:title", content: "tieflab — Hardware Innovation Lab" },
       {
         property: "og:description",
-        content: "High-tolerance components and lab equipment for hardware engineering.",
+        content: "High-tolerance components, microcontrollers and creative lighting from Clab.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
@@ -100,6 +100,25 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         href: "https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..600;1,400..600&family=JetBrains+Mono:wght@400;500&display=swap",
       },
       { rel: "stylesheet", href: appCss },
+      {
+        rel: "icon",
+        type: "image/svg+xml",
+        href:
+          "data:image/svg+xml;utf8," +
+          encodeURIComponent(
+            `<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='48' fill='%231a2754'/><path d='M10 78 L82 18' stroke='%23c53030' stroke-width='9' stroke-linecap='round'/><text x='50' y='62' text-anchor='middle' font-family='Arial Black,sans-serif' font-weight='900' font-size='28' fill='white'>TIEF</text></svg>`,
+          ),
+      },
+    ],
+    scripts: [
+      {
+        children:
+          "function googleTranslateElementInit(){new google.translate.TranslateElement({pageLanguage:'en',includedLanguages:'en,rw,fr,ru,sw,ja,zh-CN,ko,es,ar',autoDisplay:false},'google_translate_element');}",
+      },
+      {
+        src: "https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit",
+        async: true,
+      },
     ],
   }),
   shellComponent: RootShell,
