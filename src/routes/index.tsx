@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useSuspenseQuery, queryOptions } from "@tanstack/react-query";
 import { useState } from "react";
 import { Header } from "@/components/Header";
+import { Footer } from "@/components/Footer";
 import { ProductCard } from "@/components/ProductCard";
 import { listProducts } from "@/lib/products.functions";
 
@@ -13,11 +14,11 @@ const productsQO = queryOptions({
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Circuit Archive — DIY Electronics Components & Tools" },
+      { title: "tieflab — DIY Electronics, Arduino, LEDs & Creative Hardware" },
       {
         name: "description",
         content:
-          "Buy Arduino, Raspberry Pi, LEDs, resistors, soldering tools and more. Free Kigali shipping over $10.",
+          "Shop Arduino, Raspberry Pi, LEDs, resistors, soldering tools, futuristic bulbs and creative DIY electronics from tieflab. Free Kigali shipping over $10.",
       },
     ],
   }),
@@ -119,11 +120,11 @@ function Index() {
           <div className="flex-1">
             <header className="mb-8">
               <h1 className="text-2xl font-medium tracking-tight text-balance leading-none">
-                Electronic Components & Precision Tools
+                Electronic Components & Creative DIY Hardware
               </h1>
               <p className="mt-2 max-w-[56ch] text-sm text-muted-foreground text-pretty">
-                Source high-tolerance microelectronics, development boards, and specialized lab
-                equipment for modern hardware engineering.
+                tieflab from Clab — source LEDs, microcontrollers, lab tools, futuristic lighting,
+                and acrylic creations for makers and engineers.
               </p>
             </header>
 
@@ -142,19 +143,7 @@ function Index() {
         </div>
       </main>
 
-      <footer className="mx-auto mt-24 max-w-7xl border-t border-border px-4 py-12 sm:px-6">
-        <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
-          <div className="flex items-center gap-2">
-            <div className="size-5 rounded-sm border-2 border-foreground" />
-            <span className="font-mono text-sm font-semibold tracking-tighter">
-              CIRCUIT_ARCHIVE v1.0
-            </span>
-          </div>
-          <p className="font-mono text-[10px] uppercase tracking-widest text-muted-foreground">
-            System Status: Operational // Warehouse Node: Kigali
-          </p>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }

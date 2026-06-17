@@ -1,6 +1,6 @@
-export type Currency = "USD" | "RWF" | "EUR" | "GBP";
+export type Currency = "RWF" | "USD" | "EUR" | "GBP";
 
-export const CURRENCIES: Currency[] = ["USD", "RWF", "EUR", "GBP"];
+export const CURRENCIES: Currency[] = ["RWF", "USD", "EUR", "GBP"];
 
 // Display-only conversion rates (relative to USD). Payment is always charged in USD.
 export const RATES: Record<Currency, number> = {
@@ -12,7 +12,7 @@ export const RATES: Record<Currency, number> = {
 
 const SYMBOLS: Record<Currency, string> = {
   USD: "$",
-  RWF: "RWF ",
+  RWF: "FRW ",
   EUR: "€",
   GBP: "£",
 };
@@ -27,4 +27,20 @@ export function formatPrice(usd: number, currency: Currency): string {
     return `${SYMBOLS.RWF}${Math.round(converted).toLocaleString()}`;
   }
   return `${SYMBOLS[currency]}${converted.toFixed(2)}`;
+}
+
+/** Best-effort currency guess from browser locale. Defaults to RWF. */
+export function detectCurrency(): Currency {
+  if (typeof navigator === "undefined") return "RWF";
+  const lang = (navigator.language || "en-RW").toLowerCase();
+  const region = lang.split("-")[1];
+  if (!region) return "RWF";
+  if (["us", "ec", "sv", "pa"].includes(region)) return "USD";
+  if (["gb", "uk"].includes(region)) return "GBP";
+  if (
+    ["fr", "de", "es", "it", "nl", "be", "at", "pt", "ie", "fi", "gr", "lu"].includes(region)
+  )
+    return "EUR";
+  // Default for RW and anywhere else
+  return "RWF";
 }

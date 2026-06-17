@@ -1,7 +1,8 @@
 import { Link } from "@tanstack/react-router";
-import { ShoppingCart, Settings, User } from "lucide-react";
+import { ShoppingCart, User } from "lucide-react";
 import { useStore } from "@/lib/store";
 import { CURRENCIES } from "@/lib/currency";
+import { Logo } from "./Logo";
 
 export function Header() {
   const { cartCount, currency, setCurrency } = useStore();
@@ -11,10 +12,13 @@ export function Header() {
       <nav className="mx-auto flex h-14 max-w-7xl items-center justify-between px-4 sm:px-6">
         <div className="flex min-w-0 items-center gap-4 sm:gap-8">
           <Link to="/" className="flex items-center gap-2 shrink-0">
-            <div className="size-5 rounded-sm border-2 border-foreground" />
-            <span className="font-mono text-sm font-semibold tracking-tighter">
-              CIRCUIT_ARCHIVE
-            </span>
+            <Logo className="size-7" />
+            <div className="flex flex-col leading-none">
+              <span className="font-mono text-sm font-bold tracking-tight">tieflab</span>
+              <span className="font-mono text-[9px] uppercase tracking-widest text-muted-foreground">
+                Clab · hardware
+              </span>
+            </div>
           </Link>
           <div className="hidden md:flex items-center gap-6">
             <Link
@@ -23,13 +27,13 @@ export function Header() {
               activeProps={{ className: "text-sm font-medium text-foreground" }}
               activeOptions={{ exact: true }}
             >
-              Inventory
+              Shop
             </Link>
             <Link
-              to="/admin"
-              className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+              to="/cart"
+              className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground md:hidden lg:inline"
             >
-              Admin
+              Cart
             </Link>
           </div>
         </div>
@@ -47,7 +51,7 @@ export function Header() {
                     : "text-muted-foreground hover:text-foreground")
                 }
               >
-                {c}
+                {c === "RWF" ? "FRW" : c}
               </button>
             ))}
           </div>
@@ -57,7 +61,9 @@ export function Header() {
             className="sm:hidden rounded-md bg-secondary px-2 py-1 font-mono text-[10px] ring-1 ring-black/5"
           >
             {CURRENCIES.map((c) => (
-              <option key={c}>{c}</option>
+              <option key={c} value={c}>
+                {c === "RWF" ? "FRW" : c}
+              </option>
             ))}
           </select>
           <Link
@@ -80,7 +86,7 @@ export function Header() {
       </nav>
       <div className="bg-foreground py-1.5 text-background">
         <p className="text-center font-mono text-[10px] uppercase tracking-widest">
-          Kigali Delivery: Free on all orders exceeding $10.00 USD
+          Kigali Delivery: Free on all orders exceeding $10 USD
         </p>
       </div>
     </header>
