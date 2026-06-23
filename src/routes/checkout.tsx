@@ -241,3 +241,38 @@ function Input(props: {
     </div>
   );
 }
+
+function buildWhatsAppUrl(
+  cart: { name: string; quantity: number; price_usd: number; image_url: string | null; slug: string }[],
+  form: { customer_name: string; customer_email: string; customer_phone: string; address: string },
+  city: string,
+  subtotalUsd: number,
+  shipping: number,
+  total: number,
+  currency: string,
+): string {
+  const origin = typeof window !== "undefined" ? window.location.origin : "";
+  const lines = [
+    "🛒 *New Order from Clab*",
+    "",
+    "*Items:*",
+    ...cart.map(
+      (i, idx) =>
+        `${idx + 1}. ${i.name} ×${i.quantity} — $${(i.price_usd * i.quantity).toFixed(2)}` +
+        `\n   Link: ${origin}/products/${i.slug}` +
+        (i.image_url ? `\n   Image: ${i.image_url}` : ""),
+    ),
+    "",
+    `*Subtotal:* $${subtotalUsd.toFixed(2)}`,
+    `*Shipping:* ${shipping === 0 ? "FREE" : "$" + shipping.toFixed(2)}`,
+    `*Total:* $${total.toFixed(2)} USD  (display: ${currency})`,
+    "",
+    "*Customer:*",
+    `Name: ${form.customer_name || "(not provided)"}`,
+    `Email: ${form.customer_email || "(not provided)"}`,
+    `Phone: ${form.customer_phone || "(not provided)"}`,
+    `City: ${city}`,
+    `Address: ${form.address || "(not provided)"}`,
+  ];
+  return `https://wa.me/250785762690?text=${encodeURIComponent(lines.join("\n"))}`;
+}
