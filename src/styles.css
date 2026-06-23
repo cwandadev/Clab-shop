@@ -5,8 +5,8 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
-  --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, -apple-system;
-  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, monospace;
+  --font-sans: "Instrument Sans", ui-sans-serif, system-ui, -apple-system;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
 
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
@@ -37,8 +37,8 @@
 
 :root {
   --radius: 0.5rem;
-  --background: oklch(0.985 0 0);              /* zinc-50 */
-  --foreground: oklch(0.21 0.006 285);         /* zinc-900 */
+  --background: oklch(0.985 0 0); /* zinc-50 */
+  --foreground: oklch(0.21 0.006 285); /* zinc-900 */
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.21 0.006 285);
   --popover: oklch(1 0 0);
@@ -49,7 +49,7 @@
   --secondary-foreground: oklch(0.21 0.006 285);
   --muted: oklch(0.96 0.003 285);
   --muted-foreground: oklch(0.55 0.013 285);
-  --accent: oklch(0.62 0.14 162);              /* emerald #059669 */
+  --accent: oklch(0.62 0.14 162); /* emerald #059669 */
   --accent-foreground: oklch(0.985 0 0);
   --destructive: oklch(0.58 0.22 27);
   --destructive-foreground: oklch(0.985 0 0);

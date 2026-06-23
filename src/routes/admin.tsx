@@ -40,8 +40,8 @@ function AdminLayout() {
         <main className="mx-auto max-w-md px-4 py-16 text-center">
           <h1 className="text-xl font-medium">Admin access required</h1>
           <p className="mt-2 text-sm text-muted-foreground">
-            Your account does not have admin permissions. Ask an existing tieflab admin to grant
-            you access.
+            Your account does not have admin permissions. Ask an existing tieflab admin to grant you
+            access.
           </p>
         </main>
       </div>

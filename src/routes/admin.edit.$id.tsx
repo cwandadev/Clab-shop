@@ -43,7 +43,9 @@ function EditProduct() {
     setSaving(true);
     try {
       const extra_images = extraImagesText
-        .split("\n").map((s) => s.trim()).filter((s) => s.length > 0);
+        .split("\n")
+        .map((s) => s.trim())
+        .filter((s) => s.length > 0);
       await save({
         data: {
           id: form.id,

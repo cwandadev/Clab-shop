@@ -58,10 +58,18 @@ export function StoreProvider({ children }: { children: ReactNode }) {
     } catch {}
   }, []);
 
-  useEffect(() => { localStorage.setItem("tl_cart", JSON.stringify(cart)); }, [cart]);
-  useEffect(() => { localStorage.setItem("tl_wishlist", JSON.stringify(wishlist)); }, [wishlist]);
-  useEffect(() => { localStorage.setItem("tl_recent", JSON.stringify(recentlyViewed)); }, [recentlyViewed]);
-  useEffect(() => { localStorage.setItem("tl_currency", currency); }, [currency]);
+  useEffect(() => {
+    localStorage.setItem("tl_cart", JSON.stringify(cart));
+  }, [cart]);
+  useEffect(() => {
+    localStorage.setItem("tl_wishlist", JSON.stringify(wishlist));
+  }, [wishlist]);
+  useEffect(() => {
+    localStorage.setItem("tl_recent", JSON.stringify(recentlyViewed));
+  }, [recentlyViewed]);
+  useEffect(() => {
+    localStorage.setItem("tl_currency", currency);
+  }, [currency]);
 
   const addToCart: StoreState["addToCart"] = (item, qty = 1) => {
     setCart((prev) => {
@@ -94,10 +102,21 @@ export function StoreProvider({ children }: { children: ReactNode }) {
   return (
     <StoreContext.Provider
       value={{
-        cart, currency, wishlist, recentlyViewed,
-        addToCart, removeFromCart, updateQty, clearCart,
-        setCurrency, toggleWishlist, isWishlisted, trackView,
-        cartCount, wishlistCount: wishlist.length, subtotalUsd,
+        cart,
+        currency,
+        wishlist,
+        recentlyViewed,
+        addToCart,
+        removeFromCart,
+        updateQty,
+        clearCart,
+        setCurrency,
+        toggleWishlist,
+        isWishlisted,
+        trackView,
+        cartCount,
+        wishlistCount: wishlist.length,
+        subtotalUsd,
       }}
     >
       {children}
@@ -121,12 +140,30 @@ export function computeShippingUsd(city: string, subtotalUsd: number): number {
 
 /** Categories considered "electronic components" — buttons say "Add to Kit". */
 const COMPONENT_KEYWORDS = [
-  "component", "led", "diode", "resistor", "capacit", "arduino", "raspberry",
-  "microcontroller", "sensor", "module", "wire", "battery", "pcb", "transistor",
-  "ic", "circuit", "magnet", "relay",
+  "component",
+  "led",
+  "diode",
+  "resistor",
+  "capacit",
+  "arduino",
+  "raspberry",
+  "microcontroller",
+  "sensor",
+  "module",
+  "wire",
+  "battery",
+  "pcb",
+  "transistor",
+  "ic",
+  "circuit",
+  "magnet",
+  "relay",
 ];
 
-export function isComponentProduct(p: { category?: string | null; product_type?: string | null }): boolean {
+export function isComponentProduct(p: {
+  category?: string | null;
+  product_type?: string | null;
+}): boolean {
   if (p.product_type === "digital_circuit") return true;
   const cat = (p.category || "").toLowerCase();
   return COMPONENT_KEYWORDS.some((k) => cat.includes(k));

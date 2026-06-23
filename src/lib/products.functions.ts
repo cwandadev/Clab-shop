@@ -28,7 +28,11 @@ export const getProductBySlug = createServerFn({ method: "GET" })
 
 const productSchema = z.object({
   id: z.string().uuid().optional(),
-  slug: z.string().min(1).max(120).regex(/^[a-z0-9-]+$/, "lowercase, digits, dashes"),
+  slug: z
+    .string()
+    .min(1)
+    .max(120)
+    .regex(/^[a-z0-9-]+$/, "lowercase, digits, dashes"),
   name: z.string().min(1).max(200),
   description: z.string().max(2000).optional().nullable(),
   category: z.string().min(1).max(80),
@@ -73,7 +77,10 @@ export const upsertProduct = createServerFn({ method: "POST" })
       if (extra_images.length > 0) {
         await supabaseAdmin.from("product_images").insert(
           extra_images.map((url, i) => ({
-            product_id: row.id, url, sort_order: i, is_primary: false,
+            product_id: row.id,
+            url,
+            sort_order: i,
+            is_primary: false,
           })),
         );
       }

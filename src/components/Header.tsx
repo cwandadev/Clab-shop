@@ -90,9 +90,7 @@ export function Header() {
             className="flex items-center gap-2 rounded-md bg-foreground py-2 pl-2 pr-3 text-sm font-medium text-background ring-1 ring-foreground"
           >
             <ShoppingCart className="size-4 shrink-0" />
-            <span className="font-mono text-xs">
-              [{String(cartCount).padStart(2, "0")}]
-            </span>
+            <span className="font-mono text-xs">[{String(cartCount).padStart(2, "0")}]</span>
           </Link>
         </div>
       </nav>

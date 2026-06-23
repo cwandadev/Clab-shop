@@ -36,14 +36,19 @@ export function ProductCard({ product }: { product: ProductCardData }) {
         onClick={(e) => {
           e.preventDefault();
           toggleWishlist({
-            id: product.id, slug: product.slug, name: product.name,
-            price_usd: product.price_usd, image_url: product.image_url,
+            id: product.id,
+            slug: product.slug,
+            name: product.name,
+            price_usd: product.price_usd,
+            image_url: product.image_url,
           });
         }}
         aria-label={wished ? "Remove from wishlist" : "Add to wishlist"}
         className="absolute top-3 right-3 z-10 grid size-8 place-items-center rounded-full bg-background/90 ring-1 ring-black/5 backdrop-blur transition hover:bg-background"
       >
-        <Heart className={"size-4 " + (wished ? "fill-accent stroke-accent" : "stroke-muted-foreground")} />
+        <Heart
+          className={"size-4 " + (wished ? "fill-accent stroke-accent" : "stroke-muted-foreground")}
+        />
       </button>
 
       <Link
@@ -52,8 +57,12 @@ export function ProductCard({ product }: { product: ProductCardData }) {
         className="mb-6 grid aspect-square w-full place-items-center rounded-[min(1vw,12px)] bg-secondary outline-1 -outline-offset-1 outline-black/5 overflow-hidden"
       >
         {product.image_url ? (
-          <img src={product.image_url} alt={product.name}
-            className="size-full object-cover transition-transform group-hover:scale-105" loading="lazy" />
+          <img
+            src={product.image_url}
+            alt={product.name}
+            className="size-full object-cover transition-transform group-hover:scale-105"
+            loading="lazy"
+          />
         ) : (
           <span className="font-mono text-[10px] uppercase tracking-[0.15em] text-muted-foreground">
             {product.slug.slice(0, 12)}
@@ -62,8 +71,11 @@ export function ProductCard({ product }: { product: ProductCardData }) {
       </Link>
       <div className="flex-1">
         <div className="mb-1 flex justify-between items-start gap-3">
-          <Link to="/products/$slug" params={{ slug: product.slug }}
-            className="text-sm font-medium hover:text-accent">
+          <Link
+            to="/products/$slug"
+            params={{ slug: product.slug }}
+            className="text-sm font-medium hover:text-accent"
+          >
             {product.name}
           </Link>
           <span className="font-mono text-sm whitespace-nowrap">
@@ -72,10 +84,14 @@ export function ProductCard({ product }: { product: ProductCardData }) {
         </div>
         <div className="mb-4 flex flex-wrap gap-2">
           {product.spec_1 && (
-            <span className="rounded bg-secondary px-1.5 py-0.5 font-mono text-[10px] text-muted-foreground ring-1 ring-black/5">{product.spec_1}</span>
+            <span className="rounded bg-secondary px-1.5 py-0.5 font-mono text-[10px] text-muted-foreground ring-1 ring-black/5">
+              {product.spec_1}
+            </span>
           )}
           {product.spec_2 && (
-            <span className="rounded bg-secondary px-1.5 py-0.5 font-mono text-[10px] text-muted-foreground ring-1 ring-black/5">{product.spec_2}</span>
+            <span className="rounded bg-secondary px-1.5 py-0.5 font-mono text-[10px] text-muted-foreground ring-1 ring-black/5">
+              {product.spec_2}
+            </span>
           )}
         </div>
         {product.description && (
@@ -86,10 +102,16 @@ export function ProductCard({ product }: { product: ProductCardData }) {
       </div>
       <button
         onClick={() => {
-          addToCart({
-            id: product.id, slug: product.slug, name: product.name,
-            price_usd: product.price_usd, image_url: product.image_url,
-          }, 1);
+          addToCart(
+            {
+              id: product.id,
+              slug: product.slug,
+              name: product.name,
+              price_usd: product.price_usd,
+              image_url: product.image_url,
+            },
+            1,
+          );
           toast.success(`${product.name} ${isKit ? "added to kit" : "added to cart"}`);
         }}
         disabled={product.stock === 0}

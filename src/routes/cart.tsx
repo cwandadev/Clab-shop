@@ -40,7 +40,11 @@ function CartPage() {
                     className="size-20 shrink-0 rounded bg-secondary overflow-hidden grid place-items-center"
                   >
                     {item.image_url ? (
-                      <img src={item.image_url} alt={item.name} className="size-full object-cover" />
+                      <img
+                        src={item.image_url}
+                        alt={item.name}
+                        className="size-full object-cover"
+                      />
                     ) : (
                       <span className="font-mono text-[9px] text-muted-foreground">IMG</span>
                     )}
@@ -109,7 +113,8 @@ function CartPage() {
                 </div>
               </div>
               <p className="mt-3 text-[10px] text-muted-foreground">
-                Charged in USD. {currency !== "USD" ? "Display currency converted at indicative rates." : ""}
+                Charged in USD.{" "}
+                {currency !== "USD" ? "Display currency converted at indicative rates." : ""}
               </p>
               <Link
                 to="/checkout"
