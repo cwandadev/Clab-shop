@@ -200,6 +200,20 @@ function CheckoutPage() {
             <p className="mt-2 text-[10px] text-muted-foreground text-center">
               Secure payment by Stripe. Charged in USD.
             </p>
+            <div className="mt-4 border-t border-border pt-4 text-center">
+              <a
+                href={buildWhatsAppUrl(cart, form, city, subtotalUsd, shipping, total, currency)}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-xs font-medium text-[#25D366] hover:underline inline-flex items-center gap-1.5"
+              >
+                <svg viewBox="0 0 24 24" className="size-3.5 fill-current"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38a9.87 9.87 0 0 0 4.74 1.21h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2Z"/></svg>
+                Order via WhatsApp
+              </a>
+              <p className="mt-1 text-[10px] text-muted-foreground">
+                Chat with us at +250 785 762 690
+              </p>
+            </div>
           </aside>
         </form>
       </main>
@@ -226,4 +240,39 @@ function Input(props: {
       />
     </div>
   );
+}
+
+function buildWhatsAppUrl(
+  cart: { name: string; quantity: number; price_usd: number; image_url: string | null; slug: string }[],
+  form: { customer_name: string; customer_email: string; customer_phone: string; address: string },
+  city: string,
+  subtotalUsd: number,
+  shipping: number,
+  total: number,
+  currency: string,
+): string {
+  const origin = typeof window !== "undefined" ? window.location.origin : "";
+  const lines = [
+    "🛒 *New Order from Clab*",
+    "",
+    "*Items:*",
+    ...cart.map(
+      (i, idx) =>
+        `${idx + 1}. ${i.name} ×${i.quantity} — $${(i.price_usd * i.quantity).toFixed(2)}` +
+        `\n   Link: ${origin}/products/${i.slug}` +
+        (i.image_url ? `\n   Image: ${i.image_url}` : ""),
+    ),
+    "",
+    `*Subtotal:* $${subtotalUsd.toFixed(2)}`,
+    `*Shipping:* ${shipping === 0 ? "FREE" : "$" + shipping.toFixed(2)}`,
+    `*Total:* $${total.toFixed(2)} USD  (display: ${currency})`,
+    "",
+    "*Customer:*",
+    `Name: ${form.customer_name || "(not provided)"}`,
+    `Email: ${form.customer_email || "(not provided)"}`,
+    `Phone: ${form.customer_phone || "(not provided)"}`,
+    `City: ${city}`,
+    `Address: ${form.address || "(not provided)"}`,
+  ];
+  return `https://wa.me/250785762690?text=${encodeURIComponent(lines.join("\n"))}`;
 }

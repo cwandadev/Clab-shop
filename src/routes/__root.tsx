@@ -78,13 +78,13 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "tieflab — DIY Electronics, Components & Creative Hardware" },
+      { title: "Clab — DIY Electronics, Components & Creative Hardware" },
       {
         name: "description",
         content:
-          "tieflab from Clab: LEDs, Arduino, Raspberry Pi, soldering tools, futuristic bulbs and creative DIY electronics. Free Kigali shipping over $10.",
+          "Clab from tieflab — Hardware Innovation. LEDs, Arduino, Raspberry Pi, soldering tools, futuristic bulbs and creative DIY electronics. Free Kigali shipping over $10.",
       },
-      { property: "og:title", content: "tieflab — Hardware Innovation Lab" },
+      { property: "og:title", content: "Clab from tieflab — Hardware Innovation" },
       {
         property: "og:description",
         content: "High-tolerance components, microcontrollers and creative lighting from Clab.",
@@ -102,18 +102,14 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { rel: "stylesheet", href: appCss },
       {
         rel: "icon",
-        type: "image/svg+xml",
-        href:
-          "data:image/svg+xml;utf8," +
-          encodeURIComponent(
-            `<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='48' fill='%231a2754'/><path d='M10 78 L82 18' stroke='%23c53030' stroke-width='9' stroke-linecap='round'/><text x='50' y='62' text-anchor='middle' font-family='Arial Black,sans-serif' font-weight='900' font-size='28' fill='white'>TIEF</text></svg>`,
-          ),
+        type: "image/png",
+        href: "/__l5e/assets-v1/74429fa3-117e-4dc0-b2a1-15e713b78d31/clab.png",
       },
     ],
     scripts: [
       {
         children:
-          "function googleTranslateElementInit(){new google.translate.TranslateElement({pageLanguage:'en',includedLanguages:'en,rw,fr,ru,sw,ja,zh-CN,ko,es,ar',autoDisplay:false},'google_translate_element');}",
+          "function googleTranslateElementInit(){new google.translate.TranslateElement({pageLanguage:'en',includedLanguages:'en,rw,fr,ru,sw,ja,zh-CN,ko,es,ar',layout:google.translate.TranslateElement.InlineLayout.SIMPLE,autoDisplay:false},'google_translate_element');}",
       },
       {
         src: "https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit",

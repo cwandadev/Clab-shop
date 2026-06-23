@@ -38,6 +38,10 @@ const productSchema = z.object({
   spec_1: z.string().max(80).optional().nullable(),
   spec_2: z.string().max(80).optional().nullable(),
   active: z.boolean().default(true),
+  product_type: z.enum(["physical", "digital_circuit"]).default("physical"),
+  low_stock_threshold: z.number().int().nonnegative().max(10000).optional(),
+  weight_grams: z.number().nonnegative().max(1000000).optional().nullable(),
+  extra_images: z.array(z.string().url().max(500)).max(20).optional(),
 });
 
 async function assertAdmin(supabase: any, userId: string) {
@@ -57,12 +61,37 @@ export const upsertProduct = createServerFn({ method: "POST" })
   .handler(async ({ data, context }) => {
     await assertAdmin(context.supabase, context.userId);
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
-    const payload = { ...data, image_url: data.image_url || null };
+    const { extra_images, ...rest } = data;
+    const payload = { ...rest, image_url: rest.image_url || null };
     const { data: row, error } = data.id
       ? await supabaseAdmin.from("products").update(payload).eq("id", data.id).select().single()
       : await supabaseAdmin.from("products").insert(payload).select().single();
     if (error) throw new Error(error.message);
+
+    if (row && extra_images) {
+      await supabaseAdmin.from("product_images").delete().eq("product_id", row.id);
+      if (extra_images.length > 0) {
+        await supabaseAdmin.from("product_images").insert(
+          extra_images.map((url, i) => ({
+            product_id: row.id, url, sort_order: i, is_primary: false,
+          })),
+        );
+      }
+    }
     return row;
+  });
+
+export const getProductImages = createServerFn({ method: "GET" })
+  .inputValidator((d) => z.object({ product_id: z.string().uuid() }).parse(d))
+  .handler(async ({ data }) => {
+    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const { data: rows, error } = await supabaseAdmin
+      .from("product_images")
+      .select("url, sort_order")
+      .eq("product_id", data.product_id)
+      .order("sort_order", { ascending: true });
+    if (error) throw new Error(error.message);
+    return (rows ?? []).map((r) => r.url);
   });
 
 export const deleteProduct = createServerFn({ method: "POST" })
