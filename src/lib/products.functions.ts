@@ -38,6 +38,10 @@ const productSchema = z.object({
   spec_1: z.string().max(80).optional().nullable(),
   spec_2: z.string().max(80).optional().nullable(),
   active: z.boolean().default(true),
+  product_type: z.enum(["physical", "digital_circuit"]).default("physical"),
+  low_stock_threshold: z.number().int().nonnegative().max(10000).optional(),
+  weight_grams: z.number().nonnegative().max(1000000).optional().nullable(),
+  extra_images: z.array(z.string().url().max(500)).max(20).optional(),
 });
 
 async function assertAdmin(supabase: any, userId: string) {
