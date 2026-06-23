@@ -61,12 +61,37 @@ export const upsertProduct = createServerFn({ method: "POST" })
   .handler(async ({ data, context }) => {
     await assertAdmin(context.supabase, context.userId);
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
-    const payload = { ...data, image_url: data.image_url || null };
+    const { extra_images, ...rest } = data;
+    const payload = { ...rest, image_url: rest.image_url || null };
     const { data: row, error } = data.id
       ? await supabaseAdmin.from("products").update(payload).eq("id", data.id).select().single()
       : await supabaseAdmin.from("products").insert(payload).select().single();
     if (error) throw new Error(error.message);
+
+    if (row && extra_images) {
+      await supabaseAdmin.from("product_images").delete().eq("product_id", row.id);
+      if (extra_images.length > 0) {
+        await supabaseAdmin.from("product_images").insert(
+          extra_images.map((url, i) => ({
+            product_id: row.id, url, sort_order: i, is_primary: false,
+          })),
+        );
+      }
+    }
     return row;
+  });
+
+export const getProductImages = createServerFn({ method: "GET" })
+  .inputValidator((d) => z.object({ product_id: z.string().uuid() }).parse(d))
+  .handler(async ({ data }) => {
+    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const { data: rows, error } = await supabaseAdmin
+      .from("product_images")
+      .select("url, sort_order")
+      .eq("product_id", data.product_id)
+      .order("sort_order", { ascending: true });
+    if (error) throw new Error(error.message);
+    return (rows ?? []).map((r) => r.url);
   });
 
 export const deleteProduct = createServerFn({ method: "POST" })
