@@ -22,6 +22,7 @@ I'll execute this in phases so each piece lands solid. Before phase 2 I need a f
 ## Phase 2 — Product model expansion (DB migration)
 
 Tables changing:
+
 - `categories` (admin-managed) + `product_categories` junction (a product can be in many categories)
 - `voltage_ranges` (admin-managed) + `product_voltages` junction
 - `product_images` table (multiple images per product, ordered)
@@ -63,6 +64,7 @@ Lovable already publishes your app for free at `*.lovable.app`. To deploy to Ver
 ## What I need from you before Phase 5
 
 Please share / approve adding these secrets:
+
 1. **STRIPE_SECRET_KEY** (live or test, `sk_test_...` or `sk_live_...`)
 2. **VITE_STRIPE_PUBLISHABLE_KEY** (`pk_test_...` / `pk_live_...`)
 3. **VITE_GA_MEASUREMENT_ID** (e.g. `G-XXXXXXX`)

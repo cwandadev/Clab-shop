@@ -186,7 +186,7 @@ export const confirmOrderPaid = createServerFn({ method: "POST" })
           .eq("order_id", order.id);
         for (const it of items ?? []) {
           if (!it.product_id) continue;
-          await supabaseAdmin.rpc as any; // no rpc; manual update
+          (await supabaseAdmin.rpc) as any; // no rpc; manual update
           const { data: prod } = await supabaseAdmin
             .from("products")
             .select("stock")

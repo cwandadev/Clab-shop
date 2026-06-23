@@ -28,10 +28,26 @@ export function Footer() {
               Shop
             </h4>
             <ul className="mt-4 space-y-2 text-sm">
-              <li><Link to="/" className="hover:text-accent">All products</Link></li>
-              <li><Link to="/wishlist" className="hover:text-accent">Wishlist</Link></li>
-              <li><Link to="/cart" className="hover:text-accent">Cart</Link></li>
-              <li><Link to="/auth" className="hover:text-accent">Sign in</Link></li>
+              <li>
+                <Link to="/" className="hover:text-accent">
+                  All products
+                </Link>
+              </li>
+              <li>
+                <Link to="/wishlist" className="hover:text-accent">
+                  Wishlist
+                </Link>
+              </li>
+              <li>
+                <Link to="/cart" className="hover:text-accent">
+                  Cart
+                </Link>
+              </li>
+              <li>
+                <Link to="/auth" className="hover:text-accent">
+                  Sign in
+                </Link>
+              </li>
             </ul>
           </div>
 

@@ -37,9 +37,7 @@ export function detectCurrency(): Currency {
   if (!region) return "RWF";
   if (["us", "ec", "sv", "pa"].includes(region)) return "USD";
   if (["gb", "uk"].includes(region)) return "GBP";
-  if (
-    ["fr", "de", "es", "it", "nl", "be", "at", "pt", "ie", "fi", "gr", "lu"].includes(region)
-  )
+  if (["fr", "de", "es", "it", "nl", "be", "at", "pt", "ie", "fi", "gr", "lu"].includes(region))
     return "EUR";
   // Default for RW and anywhere else
   return "RWF";
