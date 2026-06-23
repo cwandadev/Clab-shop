@@ -200,6 +200,20 @@ function CheckoutPage() {
             <p className="mt-2 text-[10px] text-muted-foreground text-center">
               Secure payment by Stripe. Charged in USD.
             </p>
+            <div className="mt-4 border-t border-border pt-4 text-center">
+              <a
+                href={buildWhatsAppUrl(cart, form, city, subtotalUsd, shipping, total, currency)}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-xs font-medium text-[#25D366] hover:underline inline-flex items-center gap-1.5"
+              >
+                <svg viewBox="0 0 24 24" className="size-3.5 fill-current"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38a9.87 9.87 0 0 0 4.74 1.21h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2Z"/></svg>
+                Order via WhatsApp
+              </a>
+              <p className="mt-1 text-[10px] text-muted-foreground">
+                Chat with us at +250 785 762 690
+              </p>
+            </div>
           </aside>
         </form>
       </main>
