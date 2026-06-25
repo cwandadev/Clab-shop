@@ -84,13 +84,19 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         content:
           "Clab from tieflab — Hardware Innovation. LEDs, Arduino, Raspberry Pi, soldering tools, futuristic bulbs and creative DIY electronics. Free Kigali shipping over $10.",
       },
-      { property: "og:title", content: "Clab from tieflab — Hardware Innovation" },
+      { property: "og:title", content: "Clab — DIY Electronics, Components & Creative Hardware" },
       {
         property: "og:description",
         content: "High-tolerance components, microcontrollers and creative lighting from Clab.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
+      { name: "twitter:title", content: "Clab — DIY Electronics, Components & Creative Hardware" },
+      { name: "description", content: "Electro Hub is a responsive e-commerce platform for selling a wide range of electronics, from DIY components to finished equipment." },
+      { property: "og:description", content: "Electro Hub is a responsive e-commerce platform for selling a wide range of electronics, from DIY components to finished equipment." },
+      { name: "twitter:description", content: "Electro Hub is a responsive e-commerce platform for selling a wide range of electronics, from DIY components to finished equipment." },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/66f79278-a160-43b2-80b8-10f7a6e7d4d8/id-preview-47bc2b82--b24ef528-104c-4e2b-ba29-c131488b4741.lovable.app-1782187262827.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/66f79278-a160-43b2-80b8-10f7a6e7d4d8/id-preview-47bc2b82--b24ef528-104c-4e2b-ba29-c131488b4741.lovable.app-1782187262827.png" },
     ],
     links: [
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
