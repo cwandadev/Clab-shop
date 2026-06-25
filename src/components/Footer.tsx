@@ -1,5 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { Logo } from "./Logo";
+import { LanguageSelector } from "./LanguageSelector";
 
 export function Footer() {
   return (
@@ -39,11 +40,7 @@ export function Footer() {
             <h4 className="font-mono text-[10px] uppercase tracking-widest text-muted-foreground">
               Language
             </h4>
-            {/* Visible, native Google Translate dropdown - actually works */}
-            <div id="google_translate_element" className="mt-4" />
-            <p className="mt-2 text-[10px] text-muted-foreground">
-              Powered by Google Translate · auto-detected by location
-            </p>
+            <LanguageSelector />
           </div>
         </div>
 

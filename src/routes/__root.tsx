@@ -112,16 +112,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         href: "/__l5e/assets-v1/74429fa3-117e-4dc0-b2a1-15e713b78d31/clab.png",
       },
     ],
-    scripts: [
-      {
-        children:
-          "function googleTranslateElementInit(){new google.translate.TranslateElement({pageLanguage:'en',includedLanguages:'en,rw,fr,ru,sw,ja,zh-CN,ko,es,ar',layout:google.translate.TranslateElement.InlineLayout.SIMPLE,autoDisplay:false},'google_translate_element');}",
-      },
-      {
-        src: "https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit",
-        async: true,
-      },
-    ],
+    scripts: [],
   }),
   shellComponent: RootShell,
   component: RootComponent,
