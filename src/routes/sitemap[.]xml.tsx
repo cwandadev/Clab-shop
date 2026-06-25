@@ -25,7 +25,7 @@ export const Route = createFileRoute("/sitemap.xml")({
         const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
         const { data: products, error } = await supabaseAdmin
           .from("products")
-          .select("slug, updated_at")
+          .select("slug, created_at")
           .eq("active", true)
           .order("created_at", { ascending: false });
 
@@ -37,10 +37,11 @@ export const Route = createFileRoute("/sitemap.xml")({
               path: `/products/${product.slug}`,
               changefreq: "weekly",
               priority: "0.8",
-              lastmod: product.updated_at ? new Date(product.updated_at).toISOString().split("T")[0] : undefined,
+              lastmod: product.created_at ? new Date(product.created_at).toISOString().split("T")[0] : undefined,
             });
           }
         }
+
 
         const urls = entries.map((e) =>
           [
