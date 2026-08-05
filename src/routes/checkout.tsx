@@ -191,7 +191,9 @@ function CheckoutPage() {
               </div>
             </div>
             <button
-              type="submit"
+              /* type="submit" */
+             href={buildWhatsAppUrl(cart, form, city, subtotalUsd, shipping, total, currency)}
+                target="_blank"
               disabled={loading}
               className="mt-6 w-full rounded-md bg-accent py-3 text-sm font-medium text-accent-foreground disabled:opacity-50"
             >
